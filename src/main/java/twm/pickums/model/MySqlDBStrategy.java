@@ -349,38 +349,38 @@ public class MySqlDBStrategy implements DBStrategy, Serializable {
 
         DBStrategy db = new MySqlDBStrategy();
         db.openConnection("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/book2",
+                "jdbc:mysql://localhost:3306/picks",
                 "root", "admin");
 
         List<Map<String, Object>> rawData
-                = db.findAllRecords("author", 0);
+                = db.findAllRecords("teams", 0);
         System.out.println(rawData);
         
         db.closeConnection();
         
-        db.openConnection("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/book2",
-                "root", "admin");
-        
-        List<String> colNames = Arrays.asList("author_name","date_added");
-        List<Object> colValues = Arrays.asList("Lucifer","2000-02-11");
-        int result = db.updateRecords("author", colNames, colValues, "author_id", 1);
-        
-           db.closeConnection();
-
-//        int result = db.deleteById("author", "author_id", 2);
-
-        db.openConnection("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/book2",
-                "root", "admin");
-
-        rawData
-                = db.findAllRecords("author", 0);
-        System.out.println(rawData);
-
-        db.closeConnection();
-
-        System.out.println(rawData);
+//        db.openConnection("com.mysql.jdbc.Driver",
+//                "jdbc:mysql://localhost:3306/book2",
+//                "root", "admin");
+//        
+//        List<String> colNames = Arrays.asList("author_name","date_added");
+//        List<Object> colValues = Arrays.asList("Lucifer","2000-02-11");
+//        int result = db.updateRecords("author", colNames, colValues, "author_id", 1);
+//        
+//           db.closeConnection();
+//
+////        int result = db.deleteById("author", "author_id", 2);
+//
+//        db.openConnection("com.mysql.jdbc.Driver",
+//                "jdbc:mysql://localhost:3306/book2",
+//                "root", "admin");
+//
+//        rawData
+//                = db.findAllRecords("author", 0);
+//        System.out.println(rawData);
+//
+//        db.closeConnection();
+//
+//        System.out.println(rawData);
     }
 
 }

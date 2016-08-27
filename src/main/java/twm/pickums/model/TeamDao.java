@@ -47,7 +47,7 @@ public class TeamDao implements TeamDaoStrategy, Serializable {
         db.openConnection(driver, url, user, pwd);
         List<Team> records = new ArrayList<>();
         
-        List<Map<String, Object>> rawData = db.findAllRecords("team", 0);
+        List<Map<String, Object>> rawData = db.findAllRecords("teams", 0);
         for(Map rawRec : rawData) {
             Team team = new Team();
             Object obj = rawRec.get("team_id");

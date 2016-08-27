@@ -24,7 +24,7 @@ import twm.pickums.model.TeamService;
 @WebServlet(name = "TeamController", urlPatterns = {"/TeamController"})
 public class TeamController extends HttpServlet {
 
-    private static final String LIST_PAGE = "/listTeams.jsp";
+    private static final String LIST_PAGE = "/Index.jsp";
     private static final String LIST_ACTION = "list";
     private static final String ACTION_PARAM = "action";
 
@@ -53,9 +53,10 @@ public class TeamController extends HttpServlet {
         String destination = LIST_PAGE;
         String action = request.getParameter(ACTION_PARAM);
 
-        configDbConnection();
+        
 
         try {
+            configDbConnection();
             switch (action) {
                 case LIST_ACTION:
                     this.refreshList(request, teamService);
