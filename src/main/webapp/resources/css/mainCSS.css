@@ -1,0 +1,35 @@
+div:empty {
+  display:none;
+}
+
+li {
+    cursor: pointer;
+}
+body { 
+    padding-top: 70px;
+}
+h1 {
+  font-size: 24pt;
+}
+h4 {
+  font-size: 16pt;
+  color: #aaa; 
+}
+
+button:hover {
+  background: #2f90d5;
+  background: -moz-linear-gradient(top, #2f90d5 0%, #0351b7 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2f90d5), color-stop(100%,#0351b7));
+  background: -webkit-linear-gradient(top, #2f90d5 0%,#0351b7 100%);
+  background: -o-linear-gradient(top, #2f90d5 0%,#0351b7 100%);
+  background: -ms-linear-gradient(top, #2f90d5 0%,#0351b7 100%);
+  background: linear-gradient(top, #2f90d5 0%,#0351b7 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#2f90d5', endColorstr='#0351b7',GradientType=0 );
+}
+ 
+button:active {
+  background: #127fd2;
+  -webkit-box-shadow: inset 0px 2px 1px 0px rgba(0, 47, 117, .5), 0px 1px 1px 0px rgba(0, 0, 0, 0);
+  box-shadow: inset 0px 2px 1px 0px rgba(0, 47, 117, .5), 0px 1px 1px 0px rgba(0, 0, 0, 0); 
+}
+

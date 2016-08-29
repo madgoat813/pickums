@@ -7,5 +7,15 @@
     <body>
         <h1>Pickums Index page</h1>
         <a href="TeamController?action=list">List Teams</a>
+        <a href="UserController?action=list">List Users</a>
+        <br>
+        <form method="POST" action="UserController?action=login">
+        <label>Enter Username</label>
+        <input name="userLogin" value=""/>
+        <br>
+        <label>Enter Password</label>               
+        <input type="password" name="userPassword" value=""/>
+        <input type="submit" value="login" name="login">
+        </form>
     </body>
 </html>
