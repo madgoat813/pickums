@@ -25,10 +25,26 @@ import twm.pickums.model.TeamService;
 public class TeamController extends HttpServlet {
 
     private static final String LIST_PAGE = "/listTeams.jsp";
-    private static final String LIST_ACTION = "list";
-    private static final String ACTION_PARAM = "action";
+    private static final String ADD_PAGE = "/addTeam.jsp";
+    private static final String EDIT_PAGE = "/editTeam.jsp";
+    
 
-    // db config init params from web.xml
+    private static final String LIST_ACTION = "list";
+    private static final String CRUD_ACTION = "crud";
+    private static final String SAVE_ACTION = "save";
+    private static final String EDIT_ACTION = "edit";
+    private static final String ADD_ACTION = "add";
+    private static final String DELETE_ACTION = "delete";
+    private static final String CANCEL_ACTION = "cancel";
+
+    private static final String ACTION_PARAM = "action";
+    private static final String SUBMIT_ACTION = "submit";
+    
+    private static final String TEAM_ID = "teamId";
+    private static final String TEAM_NAME = "teamName";
+    private static final String TEAM_CITY = "teamCity";
+    
+// db config init params from web.xml
     private String driverClass;
     private String url;
     private String userName;
@@ -52,7 +68,7 @@ public class TeamController extends HttpServlet {
 
         String destination = LIST_PAGE;
         String action = request.getParameter(ACTION_PARAM);
-
+        Team team = null;
         
 
         try {
@@ -62,12 +78,61 @@ public class TeamController extends HttpServlet {
                     this.refreshList(request, teamService);
                     destination = LIST_PAGE;
                     break;
+            case CRUD_ACTION:
+                    String subAction = request.getParameter(SUBMIT_ACTION);
+                    switch (subAction) {
+                        case DELETE_ACTION:
+                            String[] teamIds = request.getParameterValues(TEAM_ID);
+                            for (String id : teamIds) {
+                                teamService.deleteTeamById(id);
+                                
+                            }
+                            this.refreshList(request, teamService);
+                            destination = LIST_PAGE;
+                            break;
+                        case ADD_ACTION:
+                            destination = ADD_PAGE;
+                            break;
+                        case EDIT_ACTION:
+                            String teamId = request.getParameter(TEAM_ID);
+                            
+                            team = teamService.getTeamById(teamId);
+                            request.setAttribute("team", team);
+                            destination = EDIT_PAGE;
+                            break;
+
+                    }
+                    break;
+                case SAVE_ACTION:
+                    String tId = request.getParameter(TEAM_ID);
+                    String tName = request.getParameter(TEAM_NAME);
+                    String tCity = request.getParameter(TEAM_CITY);
+                    
+                    teamService.updateTeam(tId, tName, tCity);
+                    this.refreshList(request, teamService);
+                    destination = LIST_PAGE;
+                    break;
+                case ADD_ACTION:
+                    String teamName = request.getParameter(TEAM_NAME);
+                    String teamCity = request.getParameter(TEAM_CITY);                    
+                    
+                    teamService.addTeam(teamName, teamCity);
+                    this.refreshList(request, teamService);
+                    destination = LIST_PAGE;
+                    break;
+                case CANCEL_ACTION:
+                    this.refreshList(request, teamService);
+                    destination = LIST_PAGE;
+                    break;
             }
+
         } catch (Exception e) {
 
+        } finally {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destination);
+
+            dispatcher.forward(request, response);
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destination);
-        dispatcher.forward(request, response);
     }
 // Avoid D-R-Y
 

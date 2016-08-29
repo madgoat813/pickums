@@ -25,6 +25,7 @@
                 </thead>
                 <td><input type="text" name="userId" value="${user.userId}" class="form-control" required readonly/></td>
                 </tr>
+                <tr>
                 <thead>
                 <td>Username</td>
                 </thead>

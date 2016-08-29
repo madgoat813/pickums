@@ -16,7 +16,7 @@
     <body>
         <jsp:include page="header.jsp"/>
         <h1>Team Names</h1>
-        <form method="POST" action="ProductController?action=crud">
+        <form method="POST" action="TeamController?action=crud">
             <div class="alert alert-info" role="alert">All Teams</div>
             <table class="table" id="listTable">
                 <thead><td>ID</td><td>Name</td><td>City</td></thead>
@@ -28,6 +28,9 @@
                     </tr>
                 </c:forEach>
             </table>
+            <input type="submit" class="btn btn-primary" value="add" name="submit" id="newButton"/>&nbsp
+            <input type="submit" class="btn btn-warning" value="edit" name="submit" id="editButton" style="display:none;"/>&nbsp
+            <input type="submit" class="btn btn-danger" value="delete" name="submit" id="deleteButton" style="display:none;"/>
         </form>
         <jsp:include page="resources/js/jsLink.jsp"/>
     </body>

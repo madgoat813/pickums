@@ -39,6 +39,7 @@ public class UserService implements Serializable {
         
         dao.saveUser(id, username, password, email);
     }
+
     public void addUser(String username, String password, String email) throws DataAccessException {
         dao.newUser(username, password, email);
     }
