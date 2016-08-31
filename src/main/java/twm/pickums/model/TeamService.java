@@ -6,6 +6,7 @@
 package twm.pickums.model;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -53,5 +54,11 @@ public class TeamService implements Serializable {
 
     public void setDao(TeamDaoStrategy dao) {
         this.dao = dao;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException, SQLException, DataAccessException {
+        TeamService srv = new TeamService();
+        List<Team> teams = srv.getAllTeams();
+        System.out.println(teams);
     }
 }

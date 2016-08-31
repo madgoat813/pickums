@@ -59,6 +59,10 @@ public class TeamDao implements TeamDaoStrategy, Serializable {
 
             String city = rawRec.get("team_city") == null ? "" : rawRec.get("team_city").toString();
             team.setTeamCity(city);
+            
+            
+            Object match = rawRec.get("match_no");
+            team.setMatchNo(Integer.parseInt(match.toString()));
             records.add(team);
         }
         return records;
@@ -73,6 +77,7 @@ public class TeamDao implements TeamDaoStrategy, Serializable {
         team.setTeamId((Integer) rawRec.get("team_id"));
         team.setTeamName(rawRec.get("team_name").toString());
         team.setTeamCity(rawRec.get("team_city").toString());
+        team.setMatchNo((Integer) rawRec.get("match_no"));
         
 
         return team;
@@ -148,4 +153,20 @@ public class TeamDao implements TeamDaoStrategy, Serializable {
         this.pwd = pwd;
     }
 
+    
+    public static void main(String[] args) throws DataAccessException {
+        
+        
+        
+        TeamDaoStrategy dao = new TeamDao();
+        List<Team> teams = dao.getTeamList();
+        System.out.println(teams);
+    }
+    
+    
 }
+
+
+
+
+

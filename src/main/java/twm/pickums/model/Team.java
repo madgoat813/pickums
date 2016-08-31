@@ -15,15 +15,17 @@ public class Team {
     private Integer teamId;
     private String teamName;
     private String teamCity;
+    private Integer matchNo;
     
     public Team() {
         
     }
 
-    public Team(Integer teamId, String teamName, String teamCity) {
+    public Team(Integer teamId, String teamName, String teamCity, Integer matchNo) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.teamCity = teamCity;
+        this.matchNo = matchNo;
     }
 
     public Integer getTeamId() {
@@ -50,12 +52,18 @@ public class Team {
         this.teamCity = teamCity;
     }
 
+    public Integer getMatchNo() {
+        return matchNo;
+    }
+
+    public void setMatchNo(Integer matchNo) {
+        this.matchNo = matchNo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.teamId);
-        hash = 23 * hash + Objects.hashCode(this.teamName);
-        hash = 23 * hash + Objects.hashCode(this.teamCity);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.teamId);
         return hash;
     }
 
@@ -71,17 +79,12 @@ public class Team {
             return false;
         }
         final Team other = (Team) obj;
-        if (!Objects.equals(this.teamName, other.teamName)) {
-            return false;
-        }
-        if (!Objects.equals(this.teamCity, other.teamCity)) {
-            return false;
-        }
         if (!Objects.equals(this.teamId, other.teamId)) {
             return false;
         }
         return true;
     }
+
     
     
 }

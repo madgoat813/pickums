@@ -23,16 +23,14 @@ import twm.pickums.model.TeamService;
  *
  * @author Taylor
  */
-@WebServlet(name = "TeamController", urlPatterns = {"/TeamController"})
-public class TeamController extends HttpServlet {
+@WebServlet(name = "MatchController", urlPatterns = {"/MatchController"})
+public class MatchController extends HttpServlet {
 
-    private static final String LIST_PAGE = "/listTeams.jsp";
-    private static final String ADD_PAGE = "/addTeam.jsp";
-    private static final String EDIT_PAGE = "/editTeam.jsp";
-    private static final String PICK_PAGE = "/teamPicks.jsp";
+    private static final String LIST_PAGE = "/listMatchUp.jsp";
+    private static final String ADD_PAGE = "/addMatchUp.jsp";
+    private static final String EDIT_PAGE = "/editMatchUp.jsp";
 
     private static final String LIST_ACTION = "list";
-    private static final String PICK_ACTION = "pick";
     private static final String CRUD_ACTION = "crud";
     private static final String SAVE_ACTION = "save";
     private static final String EDIT_ACTION = "edit";
@@ -44,9 +42,8 @@ public class TeamController extends HttpServlet {
     private static final String SUBMIT_ACTION = "submit";
 
     private static final String MATCH_ID = "matchId";
-    private static final String TEAM_ID = "teamId";
-    private static final String TEAM_NAME = "teamName";
-    private static final String TEAM_CITY = "teamCity";
+    private static final String HOME_TEAM = "homeTeam";
+    private static final String AWAY_TEAM = "awayTeam";
 
 // db config init params from web.xml
     private String driverClass;
@@ -55,9 +52,9 @@ public class TeamController extends HttpServlet {
     private String password;
 
     @Inject
-    private TeamService teamService;
-    @Inject
     private MatchService matchService;
+    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -73,88 +70,60 @@ public class TeamController extends HttpServlet {
 
         String destination = LIST_PAGE;
         String action = request.getParameter(ACTION_PARAM);
-        Team team = null;
         Match match = null;
         try {
             configDbConnection();
+            
             switch (action) {
                 case LIST_ACTION:
-                    this.refreshList(request, teamService);
+                    this.refreshList(request, matchService);
                     destination = LIST_PAGE;
                     break;
-                case PICK_ACTION:
-                    this.refreshList(request, teamService);
-                    destination = PICK_PAGE;
-                    break;
-                case "listMatchUp":
-                    this.refreshMatch(request, matchService);
-                    destination = "/listMatchUp.jsp";
-                    break;
-                case "matchUp":
-                    String subActionMatch = request.getParameter(SUBMIT_ACTION);
-                    switch (subActionMatch) {
+
+                case CRUD_ACTION:
+                    String subAction = request.getParameter(SUBMIT_ACTION);
+                    switch (subAction) {
                         case DELETE_ACTION:
                             String[] matchIds = request.getParameterValues(MATCH_ID);
                             for (String id : matchIds) {
                                 matchService.deleteMatchById(id);
                             }
-                            this.refreshMatch(request, matchService);
-                            destination = "/listMatchUp.jsp";
+                            this.refreshList(request, matchService);
+                            destination = LIST_PAGE;
                             break;
                         case ADD_ACTION:
-                            destination = "/addMatchUp.jsp";
+                            this.refreshList(request, matchService);
+                            destination = ADD_PAGE;
                             break;
                         case EDIT_ACTION:
                             String matchId = request.getParameter(MATCH_ID);
 
                             match = matchService.getMatchById(matchId);
                             request.setAttribute("match", match);
-                            destination = "/editMatchUp.jsp";
-                            break;
-                    }
-                    break;
-                case CRUD_ACTION:
-                    String subAction = request.getParameter(SUBMIT_ACTION);
-                    switch (subAction) {
-                        case DELETE_ACTION:
-                            String[] teamIds = request.getParameterValues(TEAM_ID);
-                            for (String id : teamIds) {
-                                teamService.deleteTeamById(id);
-                            }
-                            this.refreshList(request, teamService);
-                            destination = LIST_PAGE;
-                            break;
-                        case ADD_ACTION:
-                            destination = ADD_PAGE;
-                            break;
-                        case EDIT_ACTION:
-                            String teamId = request.getParameter(TEAM_ID);
-
-                            team = teamService.getTeamById(teamId);
-                            request.setAttribute("team", team);
                             destination = EDIT_PAGE;
                             break;
                     }
                     break;
                 case SAVE_ACTION:
-                    String tId = request.getParameter(TEAM_ID);
-                    String tName = request.getParameter(TEAM_NAME);
-                    String tCity = request.getParameter(TEAM_CITY);
+                    String tId = request.getParameter(MATCH_ID);
+                    String tHome = request.getParameter(HOME_TEAM);
+                    String tAway = request.getParameter(AWAY_TEAM);
 
-                    teamService.updateTeam(tId, tName, tCity);
-                    this.refreshList(request, teamService);
+                    matchService.updateMatch(tId, tHome, tAway);
+                    this.refreshList(request, matchService);
                     destination = LIST_PAGE;
                     break;
                 case ADD_ACTION:
-                    String teamName = request.getParameter(TEAM_NAME);
-                    String teamCity = request.getParameter(TEAM_CITY);
+                    String id = request.getParameter("matchId");
+                    String homeTeam = request.getParameter("t1");
+                    String awayTeam = request.getParameter("t2");
 
-                    teamService.addTeam(teamName, teamCity);
-                    this.refreshList(request, teamService);
+                    matchService.addMatch(id, homeTeam, awayTeam);
+                    this.refreshList(request, matchService);
                     destination = LIST_PAGE;
                     break;
                 case CANCEL_ACTION:
-                    this.refreshList(request, teamService);
+                    this.refreshList(request, matchService);
                     destination = LIST_PAGE;
                     break;
             }
@@ -169,17 +138,14 @@ public class TeamController extends HttpServlet {
     }
     // Avoid D-R-Y
 
-    private void refreshList(HttpServletRequest request, TeamService teamService) throws Exception {
-        List<Team> teams = teamService.getAllTeams();
-        request.setAttribute("teams", teams);
-    }
-    private void refreshMatch(HttpServletRequest request, MatchService matchService) throws Exception {
+    private void refreshList(HttpServletRequest request, MatchService matchService) throws Exception {
         List<Match> match = matchService.getAllMatches();
         request.setAttribute("match", match);
+        
     }
-
+    
     private void configDbConnection() {
-        teamService.getDao().initDao(driverClass, url, userName, password);
+        matchService.getDao().initDao(driverClass, url, userName, password);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

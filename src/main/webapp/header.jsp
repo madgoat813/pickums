@@ -27,9 +27,14 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="TeamController?action=list">Teams</a></li>
                         <li><a href="UserController?action=list">Users</a></li>
+                        <li><a href="MatchController?action=list">Matches</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="TeamController?action=pick">Pick'ums</a>
+                </li>
             </ul>
+            
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle"  id="dropdownMenu2" data-toggle="dropdown" >
@@ -37,6 +42,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                         <li><a href="profilePage.jsp">View Profile</a></li>
+                        <li><a href="TeamController?action=pick">Pick'ums</a></li>
                         <li><a href="UserController?action=logout">Logout</a></li>
                     </ul>
                 </li>

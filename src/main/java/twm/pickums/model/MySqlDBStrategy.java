@@ -353,7 +353,7 @@ public class MySqlDBStrategy implements DBStrategy, Serializable {
                 "root", "admin");
 
         List<Map<String, Object>> rawData
-                = db.findAllRecords("teams", 0);
+                = db.findAllRecords("matches", 0);
         System.out.println(rawData);
         
         db.closeConnection();

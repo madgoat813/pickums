@@ -32,4 +32,24 @@ button:active {
   -webkit-box-shadow: inset 0px 2px 1px 0px rgba(0, 47, 117, .5), 0px 1px 1px 0px rgba(0, 0, 0, 0);
   box-shadow: inset 0px 2px 1px 0px rgba(0, 47, 117, .5), 0px 1px 1px 0px rgba(0, 0, 0, 0); 
 }
+/* This makes all the helmet elements the same size with rounded corners and a raised looking border*/
+.helmet {
+	position: relative;
+	border-radius: 20%;
+	border: outset;
+	margin: 5px;
+	height: 75px;
+	cursor:	pointer;
+}
+/* sets all the helmets to the same size and shows a clickability*/
+.helmet-picks {
+	position: relative;
+	border-radius: 20%;
+	border: outset;
+	margin: 5px;
+	height: 75px;
+	cursor:	pointer;
+	opacity: 1;
+	
+}
 
